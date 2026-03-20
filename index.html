@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zapojování stykačů</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <h1>Zapojování stykačů</h1>
+    <nav>
+      <a href="#znacky">Schématické značky</a>
+      <a href="#spinani">Spínání stykače</a>
+      <a href="#blokovani">Vzájemné blokování</a>
+      <a href="#reverzace">Motorová reverzace</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- SEKCE 0: Schématické značky -->
+    <section id="znacky">
+      <div class="section-header header-znacky">
+        <span class="section-number">§</span>
+        <h2>Schématické značky</h2>
+      </div>
+      <div class="section-body symbols-body">
+
+        <div class="symbols-grid">
+
+          <!-- 1. Cívka stykače -->
+          <div class="symbol-card">
+            <img src="assets/images/znacky/civka_stykace.png" alt="Cívka stykače" class="sym-svg">
+            <div class="sym-info">
+              <span class="sym-code">KM</span>
+              <span class="sym-name">Cívka stykače</span>
+            </div>
+          </div>
+
+          <!-- 2. Silový kontakt 3-pólový -->
+          <div class="symbol-card">
+            <img src="assets/images/znacky/stykac.png" alt="Silový spínací kontakt (3-pólový)" class="sym-svg">
+            <div class="sym-info">
+              <span class="sym-code">KM</span>
+              <span class="sym-name">Silový spínací kontakt (3-pólový)</span>
+            </div>
+          </div>
+
+          <!-- 3. Pomocný spínací kontakt NO -->
+          <div class="symbol-card">
+            <img src="assets/images/znacky/KM_zap.png" alt="Pomocný spínací kontakt (NO)" class="sym-svg">
+            <div class="sym-info">
+              <span class="sym-code">KM</span>
+              <span class="sym-name">Pomocný spínací kontakt (NO)</span>
+            </div>
+          </div>
+
+          <!-- 4. Pomocný rozpínací kontakt NC -->
+          <div class="symbol-card">
+            <img src="assets/images/znacky/KM_vyp.png" alt="Pomocný rozpínací kontakt (NC)" class="sym-svg">
+            <div class="sym-info">
+              <span class="sym-code">KM</span>
+              <span class="sym-name">Pomocný rozpínací kontakt (NC)</span>
+            </div>
+          </div>
+
+          <!-- 5. Zapínací tlačítko NO -->
+          <div class="symbol-card">
+            <img src="assets/images/znacky/sb_zap.png" alt="Zapínací tlačítko (NO) – START" class="sym-svg">
+            <div class="sym-info">
+              <span class="sym-code">SB</span>
+              <span class="sym-name">Zapínací tlačítko (NO) – START</span>
+            </div>
+          </div>
+
+          <!-- 6. Vypínací tlačítko NC -->
+          <div class="symbol-card">
+            <img src="assets/images/znacky/sb_vyp.png" alt="Vypínací tlačítko (NC) – STOP" class="sym-svg">
+            <div class="sym-info">
+              <span class="sym-code">SB</span>
+              <span class="sym-name">Vypínací tlačítko (NC) – STOP</span>
+            </div>
+          </div>
+
+          <!-- 7. Pojistka -->
+          <div class="symbol-card">
+            <img src="assets/images/znacky/pojistka.png" alt="Tavná pojistka" class="sym-svg">
+            <div class="sym-info">
+              <span class="sym-code">FU</span>
+              <span class="sym-name">Tavná pojistka</span>
+            </div>
+          </div>
+
+          <!-- 8. Tepelné nadproudové relé -->
+          <div class="symbol-card">
+            <img src="assets/images/znacky/nadproudove_rele.png" alt="Tepelný článek nadproudového relé" class="sym-svg">
+            <div class="sym-info">
+              <span class="sym-code">FA</span>
+              <span class="sym-name">Tepelný článek nadproudového relé</span>
+            </div>
+          </div>
+
+          <!-- 9. Kontakt nadproudového relé -->
+          <div class="symbol-card">
+            <img src="assets/images/znacky/FA.png" alt="Kontakt nadproudového relé (NC)" class="sym-svg">
+            <div class="sym-info">
+              <span class="sym-code">FA</span>
+              <span class="sym-name">Kontakt nadproudového relé (NC)</span>
+            </div>
+          </div>
+
+          <!-- 10. Koncový spínač -->
+          <div class="symbol-card">
+            <img src="assets/images/znacky/SQ.png" alt="Koncový spínač (NO)" class="sym-svg">
+            <div class="sym-info">
+              <span class="sym-code">SQ</span>
+              <span class="sym-name">Koncový spínač (NO)</span>
+            </div>
+          </div>
+
+        </div><!-- /symbols-grid -->
+
+        <h3 class="table-heading">Písmenné značení prvků</h3>
+        <table class="letter-table">
+          <thead>
+            <tr><th>Značka</th><th>Prvek</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>KM</td><td>Stykač</td></tr>
+            <tr><td>SB</td><td>Tlačítko se samočinným návratem</td></tr>
+            <tr><td>FA</td><td>Proudová ochrana, nadproudé relé</td></tr>
+            <tr><td>FU</td><td>Tavná pojistka</td></tr>
+            <tr><td>FS</td><td>Jistič vedení</td></tr>
+            <tr><td>SQ</td><td>Koncový spínač</td></tr>
+            <tr><td>HL</td><td>Žárovka, signálka</td></tr>
+          </tbody>
+        </table>
+
+      </div>
+    </section>
+
+    <!-- SEKCE 1: Spínání stykače -->
+    <section id="spinani">
+      <div class="section-header">
+        <span class="section-number">1</span>
+        <h2>Ovládání motoru z jednoho místa</h2>
+      </div>
+
+      <div class="section-body">
+        <div class="description">
+          <p>
+            Základní zapojení stykače s tlačítkovým ovládáním umožňuje spustit a zastavit motor
+            (nebo jiné zátěže) pomocí dvou tlačítek – <strong>START</strong> a <strong>STOP</strong>.
+          </p>
+          <p>
+            Stykač se sepne stisknutím tlačítka START. Pomocný kontakt stykače (<em>samodržení</em>)
+            zajistí, že stykač zůstane sepnutý i po uvolnění tlačítka. Stisknutím STOP se obvod přeruší
+            a stykač vypadne.
+          </p>
+          <h3>Princip zapojení</h3>
+          <ul>
+            <li>Tlačítko STOP je <strong>rozpínací</strong> (NC) – v klidu zavřené</li>
+            <li>Tlačítko START je <strong>spínací</strong> (NO) – v klidu otevřené</li>
+            <li>Pomocný kontakt stykače zapojen paralelně ke START → samodržení</li>
+          </ul>
+        </div>
+
+        <div class="media-block">
+          <figure>
+            <img src="assets/images/spinani/stykac_z_jednoho_mista.png"
+                 alt="Schéma spínání stykače z jednoho místa"
+                 class="schema-img">
+            <figcaption>Schéma – spínání stykače z jednoho místa</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEKCE 2: Vzájemné blokování -->
+    <section id="blokovani">
+      <div class="section-header">
+        <span class="section-number">2</span>
+        <h2>Vzájemné blokování dvou stykačů</h2>
+      </div>
+
+      <div class="section-body">
+        <div class="description">
+          <p>
+            Vzájemné blokování zajišťuje, že <strong>nemohou být sepnuty oba stykače současně</strong>.
+          </p>
+          <p>
+            Do ovládacího obvodu každého stykače je zařazen <strong>rozepínací pomocný kontakt</strong>
+            druhého stykače. Pokud je jeden stykač sepnutý, jeho pomocný kontakt přeruší obvod druhého
+            stykače – ten nelze sepnout.
+          </p>
+          <h3>Princip zapojení</h3>
+          <ul>
+            <li>Stykač 1 má v ovládacím obvodu rozepínací kontakt KM2</li>
+            <li>Stykač 2 má v ovládacím obvodu rozepínací kontakt KM1</li>
+            <li>Sepnutí jednoho stykače mechanicky i elektricky zablokuje druhý</li>
+          </ul>
+        </div>
+
+        <div class="media-block">
+          <figure>
+            <img src="assets/images/blokovani/blokovani_stykacu.png"
+                 alt="Schéma vzájemného blokování stykačů"
+                 class="schema-img">
+            <figcaption>Schéma – vzájemné blokování stykačů</figcaption>
+          </figure>
+
+          <figure class="video-figure">
+            <video controls preload="metadata">
+              <source src="assets/animations/blokovani/blokovani_stykacu.mp4" type="video/mp4">
+              Váš prohlížeč nepodporuje přehrávání videa.
+            </video>
+            <figcaption>Animace – princip vzájemného blokování</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEKCE 3: Motorová reverzace -->
+      <section id="reverzace">
+          <div class="section-header">
+              <span class="section-number">3</span>
+              <h2>Motorová reverzace – změna smyslu otáčení</h2>
+          </div>
+
+          <div class="section-body">
+              <div class="description">
+                  <p>
+                      Reverzace asynchronního motoru se provádí <strong>záměnou dvou fází</strong> na svorkách
+                      statoru. K tomu slouží dva stykače – jeden pro chod vpřed (KM1), druhý pro chod vzad (KM2).
+                  </p>
+                  <p>
+                      Oba stykače <strong>nesmí být sepnuty současně</strong> – způsobilo by to mezifázový zkrat.
+                      Proto je toto zapojení vždy doplněno vzájemným blokováním (viz sekce 2).
+                  </p>
+                  <h3>Princip zapojení</h3>
+                  <ul>
+                      <li>KM1 připojí motor v pořadí fází L1–L2–L3</li>
+                      <li>KM2 připojí motor s prohozením fází L1–L3–L2 (záměna dvou fází)</li>
+                      <li>Vzájemné blokování je povinnou součástí zapojení</li>
+                      <li>Mezi oběma chody je nutná prodleva (motor musí doběhnout nebo se zastavit)</li>
+                  </ul>
+              </div>
+
+              <div class="media-block">
+                  <figure>
+                      <img src="assets/images/reverzace/reverzace.png"
+                           alt="Schéma motorové reverzace dvěma stykači"
+                           class="schema-img">
+                      <figcaption>Schéma – motorová reverzace dvěma stykači</figcaption>
+                  </figure>
+              </div>
+          </div>
+      </section>
+
+      <section id="reverzace_dorazy">
+          <div class="section-header">
+              <span class="section-number">3</span>
+              <h2>Motorová reverzace s koncáky</h2>
+          </div>
+
+          <div class="section-body">
+              <div class="description">
+                  <p>
+                      Reverzace asynchronního motoru se provádí <strong>záměnou dvou fází</strong> na svorkách
+                      statoru. K tomu slouží dva stykače – jeden pro chod vpřed (KM1), druhý pro chod vzad (KM2).
+                  </p>
+                  <p>
+                      Oba stykače <strong>nesmí být sepnuty současně</strong> – způsobilo by to mezifázový zkrat.
+                      Proto je toto zapojení vždy doplněno vzájemným blokováním (viz sekce 2).
+                  </p>
+                  <h3>Princip zapojení</h3>
+                  <ul>
+                      <li>KM1 připojí motor v pořadí fází L1–L2–L3</li>
+                      <li>KM2 připojí motor s prohozením fází L1–L3–L2 (záměna dvou fází)</li>
+                      <li>Vzájemné blokování je povinnou součástí zapojení</li>
+                      <li>Mezi oběma chody je nutná prodleva (motor musí doběhnout nebo se zastavit)</li>
+                  </ul>
+              </div>
+
+              <div class="media-block">
+                  <figure>
+                      <img src="assets/images/reverzace/reverzace_dorazy.png"
+                           alt="Schéma motorové reverzace dvěma stykači s koncovými spínači"
+                           class="schema-img">
+                      <figcaption>Schéma – motorová reverzace dvěma stykači a koncáky</figcaption>
+                  </figure>
+              </div>
+          </div>
+      </section>
+
+  </main>
+
+  <footer>
+    <p>&copy; 2026, Luboš Hubáček</p>
+  </footer>
+
+</body>
+</html>
