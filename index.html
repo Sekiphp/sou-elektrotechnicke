@@ -6,6 +6,7 @@
   <title>Zapojování stykačů</title>
   <link rel="stylesheet" href="style.css">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
 </head>
 <body>
 
@@ -17,6 +18,7 @@
       <a href="#blokovani">Vzájemné blokování</a>
       <a href="#reverzace">Motorová reverzace</a>
       <a href="#reverzace_dorazy">Motorová reverzace s koncáky</a>
+      <a href="#reverzace_dve_mista">Motorová reverzace ze dvou míst</a>
       <a href="assets/docs/prumyslove-instalace.pdf" target="_blank">Průmyslové instalace (PDF)</a>
     </nav>
   </header>
@@ -164,9 +166,9 @@
           </p>
           <h3>Princip zapojení</h3>
           <ul>
-            <li>Tlačítko STOP je <strong>rozpínací</strong> (NC) – v klidu zavřené</li>
-            <li>Tlačítko START je <strong>spínací</strong> (NO) – v klidu otevřené</li>
-            <li>Pomocný kontakt stykače zapojen paralelně ke START → samodržení</li>
+            <li>Tlačítko STOP (SB1) je <strong>rozpínací</strong> (NC) – v klidu zavřené</li>
+            <li>Tlačítko START (SB2) je <strong>spínací</strong> (NO) – v klidu otevřené</li>
+            <li>Pomocný kontakt stykače zapojen paralelně ke START → samodržení zapnutého stykače</li>
           </ul>
         </div>
 
@@ -195,13 +197,13 @@
           </p>
           <p>
             Do ovládacího obvodu každého stykače je zařazen <strong>rozepínací pomocný kontakt</strong>
-            druhého stykače. Pokud je jeden stykač sepnutý, jeho pomocný kontakt přeruší obvod druhého
+            (NC) druhého stykače. Pokud je jeden stykač sepnutý, jeho pomocný kontakt přeruší obvod druhého
             stykače – ten nelze sepnout.
           </p>
           <h3>Princip zapojení</h3>
           <ul>
-            <li>Stykač 1 má v ovládacím obvodu rozepínací kontakt KM2</li>
-            <li>Stykač 2 má v ovládacím obvodu rozepínací kontakt KM1</li>
+            <li>Stykač KM1 má v ovládacím obvodu rozepínací kontakt KM2</li>
+            <li>Stykač KM2 má v ovládacím obvodu rozepínací kontakt KM1</li>
             <li>Sepnutí jednoho stykače mechanicky i elektricky zablokuje druhý</li>
           </ul>
         </div>
@@ -219,7 +221,7 @@
               <source src="assets/animations/blokovani/blokovani_stykacu.mp4" type="video/mp4">
               Váš prohlížeč nepodporuje přehrávání videa.
             </video>
-            <figcaption>Animace – princip vzájemného blokování</figcaption>
+            <figcaption>Animace – zapojení vzájemného blokování</figcaption>
           </figure>
         </div>
       </div>
@@ -245,7 +247,7 @@
                   <h3>Princip zapojení</h3>
                   <ul>
                       <li>KM1 připojí motor v pořadí fází L1–L2–L3</li>
-                      <li>KM2 připojí motor s prohozením fází L1–L3–L2 (záměna dvou fází)</li>
+                      <li>KM2 připojí motor s prohozením fází L3–L2–L1 (prohození krajních fází)</li>
                       <li>Vzájemné blokování je povinnou součástí zapojení</li>
                       <li>Mezi oběma chody je nutná prodleva (motor musí doběhnout nebo se zastavit)</li>
                   </ul>
@@ -264,7 +266,7 @@
 
       <section id="reverzace_dorazy">
           <div class="section-header">
-              <span class="section-number">3</span>
+              <span class="section-number">4</span>
               <h2>Motorová reverzace s koncáky</h2>
           </div>
 
@@ -281,7 +283,7 @@
                   <h3>Princip zapojení</h3>
                   <ul>
                       <li>KM1 připojí motor v pořadí fází L1–L2–L3</li>
-                      <li>KM2 připojí motor s prohozením fází L1–L3–L2 (záměna dvou fází)</li>
+                      <li>KM2 připojí motor s prohozením fází L3–L2–L1 (záměna dvou fází)</li>
                       <li>Vzájemné blokování je povinnou součástí zapojení</li>
                       <li>Mezi oběma chody je nutná prodleva (motor musí doběhnout nebo se zastavit)</li>
                   </ul>
@@ -297,6 +299,45 @@
               </div>
           </div>
       </section>
+
+    <!-- SEKCE 5: Motorová reverzace ze dvou míst -->
+    <section id="reverzace_dve_mista">
+      <div class="section-header">
+        <span class="section-number">5</span>
+        <h2>Motorová reverzace ze dvou míst</h2>
+      </div>
+
+      <div class="section-body">
+        <div class="description">
+          <p>
+            Zapojení umožňuje ovládat reverzaci motoru <strong>ze dvou nezávislých stanovišť</strong>
+            – například z rozvaděče a z pracoviště stroje. Na každém stanovišti jsou tlačítka
+            <strong>VPŘED -></strong>, <strong>VZAD <-</strong> a <strong>STOP</strong>.
+          </p>
+          <p>
+            Tlačítka STOP obou stanovišť jsou zapojena <strong>sériově</strong> – stisknutí STOP
+            z kteréhokoli místa zastaví motor. Tlačítka VPŘED a VZAD jsou na každém stanovišti
+            zapojena <strong>paralelně</strong> k odpovídajícím tlačítkům druhého stanoviště.
+          </p>
+          <h3>Princip zapojení</h3>
+          <ul>
+            <li>Dvě sady tlačítek STOP v sérii – zastavení z libovolného místa</li>
+            <li>Tlačítka VPŘED obou stanovišť paralelně → spínají KM1</li>
+            <li>Tlačítka VZAD obou stanovišť paralelně → spínají KM2</li>
+            <li>Vzájemné blokování KM1/KM2 zůstává povinnou součástí zapojení</li>
+          </ul>
+        </div>
+
+        <div class="media-block">
+          <figure>
+            <img src="assets/images/reverzace/reverzace_dve_mista.png"
+                 alt="Schéma motorové reverzace ze dvou míst"
+                 class="schema-img">
+            <figcaption>Schéma – motorová reverzace ovládaná ze dvou míst</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
 
   </main>
 
