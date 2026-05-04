@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kalkulačka impedance vypínací smyčky</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+</head>
+<body>
+
+  <header>
+    <h1>Kalkulačka impedance smyčky</h1>
+    <nav>
+      <a href="index.html">← Zapojování stykačů</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <section id="kalkulator">
+      <div class="section-header header-impedance">
+        <span class="section-number">Z</span>
+        <h2>Impedance vypínací smyčky — automatické odpojení od napájení</h2>
+      </div>
+
+      <div class="section-body">
+
+        <div class="description">
+          <div class="formula-box">Z<sub>s</sub> &nbsp;≤&nbsp; U<sub>f</sub> / I<sub>a</sub></div>
+          <p class="norm-label">ČSN EN 61557-3 / IEC 60364-4-41</p>
+
+          <h3>Napájení U<sub>f</sub></h3>
+          <div class="seg" id="seg-uf">
+            <button class="active" data-uf="230" onclick="setUf(this)">230 V</button>
+            <button data-uf="400" onclick="setUf(this)">400 V</button>
+          </div>
+
+          <h3>Charakteristika jističe</h3>
+          <div class="seg" id="seg-type">
+            <button class="active" data-type="B" onclick="setType(this)">B</button>
+            <button data-type="C" onclick="setType(this)">C</button>
+            <button data-type="D" onclick="setType(this)">D</button>
+          </div>
+
+          <div class="calc-field">
+            <div class="calc-field-head">
+              <label>Jmenovitý proud I<sub>n</sub></label>
+              <span class="calc-val" id="out-in">16 A</span>
+            </div>
+            <input type="range" id="sl-in" min="0" max="11" step="1" value="3" oninput="setIn(this.value)">
+          </div>
+
+          <div class="calc-field">
+            <div class="calc-field-head">
+              <label>Změřená Z<sub>s</sub></label>
+              <span class="calc-val" id="out-zs">1.00 Ω</span>
+            </div>
+            <input type="range" id="sl-zs" min="0.05" max="8.00" step="0.01" value="1.00" oninput="calc()">
+          </div>
+        </div>
+
+        <div class="media-block">
+          <div class="metrics">
+            <div class="metric">
+              <div class="m-label">U<sub>f</sub></div>
+              <div><span class="m-val" id="m-uf">230</span><span class="m-unit">V</span></div>
+            </div>
+            <div class="metric">
+              <div class="m-label">I<sub>a</sub></div>
+              <div><span class="m-val" id="m-ia">80</span><span class="m-unit">A</span></div>
+            </div>
+            <div class="metric">
+              <div class="m-label">Z<sub>s,max</sub></div>
+              <div><span class="m-val" id="m-zsmax">2.875</span><span class="m-unit">Ω</span></div>
+            </div>
+          </div>
+
+          <div class="result-panel ok" id="result-panel">
+            <div class="result-verdict" id="result-verdict">Ochrana VYHOVUJE</div>
+            <div class="result-detail" id="result-detail"></div>
+            <div class="bar-wrap">
+              <div class="bar-inner" id="bar" style="width:35%"></div>
+            </div>
+            <div class="bar-labels">
+              <span>0 Ω</span>
+              <span id="bar-limit-label">Z<sub>s,max</sub> = 2.875 Ω</span>
+            </div>
+          </div>
+
+          <p class="calc-note">
+            Podmínka platí pro odpojení ≤ 0,4 s (obvody do 32 A, TN)<br>
+            I<sub>a</sub> = <span id="mult-info">5</span>× I<sub>n</sub>
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="tabulka">
+      <div class="section-header header-impedance">
+        <span class="section-number">#</span>
+        <h2>Tabulka Z<sub>s,max</sub> — jistič <span id="tbl-type-label">B</span>, čas odpojení ≤ 0,4 s</h2>
+      </div>
+      <div class="symbols-body">
+        <table class="letter-table">
+          <thead>
+            <tr>
+              <th>I<sub>n</sub> (A)</th>
+              <th>I<sub>a</sub> (A)</th>
+              <th>Z<sub>s,max</sub> 230 V (Ω)</th>
+              <th>Z<sub>s,max</sub> 400 V (Ω)</th>
+              <th>Násobek</th>
+            </tr>
+          </thead>
+          <tbody id="tbl-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>Zdroj: IEC 60364-4-41, ČSN EN 61557-3 &middot; Hodnoty I<sub>a</sub> platí pro jmenovité hodnoty dle ČSN EN 60898-1 &nbsp;&middot;&nbsp; &copy; 2026, Luboš Hubáček</p>
+  </footer>
+
+<script>
+const IN_VALS = [6, 10, 13, 16, 20, 25, 32, 40, 50, 63, 80, 100];
+const MULT = { B: 5, C: 10, D: 20 };
+
+let uf = 230, type = 'B', inIdx = 3;
+
+function setUf(btn) {
+  document.querySelectorAll('#seg-uf button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  uf = +btn.dataset.uf;
+  document.getElementById('m-uf').textContent = uf;
+  calc(); renderTable();
+}
+
+function setType(btn) {
+  document.querySelectorAll('#seg-type button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  type = btn.dataset.type;
+  document.getElementById('tbl-type-label').textContent = type;
+  calc(); renderTable();
+}
+
+function setIn(idx) {
+  inIdx = +idx;
+  document.getElementById('out-in').textContent = IN_VALS[inIdx] + ' A';
+  calc(); renderTable();
+}
+
+function calc() {
+  const zs = parseFloat(document.getElementById('sl-zs').value);
+  document.getElementById('out-zs').textContent = zs.toFixed(2) + ' Ω';
+
+  const mult = MULT[type];
+  const ia = IN_VALS[inIdx] * mult;
+  const zsmax = +(uf / ia).toFixed(3);
+
+  document.getElementById('m-ia').textContent = ia;
+  document.getElementById('m-zsmax').textContent = zsmax.toFixed(3);
+  document.getElementById('mult-info').textContent = mult;
+
+  const panel  = document.getElementById('result-panel');
+  const verdict = document.getElementById('result-verdict');
+  const detail  = document.getElementById('result-detail');
+  const bar     = document.getElementById('bar');
+
+  const scale = Math.max(zsmax * 2, zs + 0.5);
+  bar.style.width = Math.min(zs / scale * 100, 100).toFixed(1) + '%';
+  document.getElementById('bar-limit-label').textContent = 'Zs,max = ' + zsmax.toFixed(3) + ' Ω';
+
+  if (zs <= zsmax) {
+    panel.className = 'result-panel ok';
+    verdict.textContent = 'Ochrana VYHOVUJE';
+    const reserve = ((zsmax - zs) / zsmax * 100).toFixed(0);
+    detail.textContent =
+      'Zs = ' + zs.toFixed(2) + ' Ω ≤ Zs,max = ' + zsmax.toFixed(3) + ' Ω\nRezerva: ' + reserve + ' %';
+  } else {
+    panel.className = 'result-panel fail';
+    verdict.textContent = 'Ochrana NEVYHOVUJE';
+    const over = ((zs - zsmax) / zsmax * 100).toFixed(0);
+    detail.textContent =
+      'Zs = ' + zs.toFixed(2) + ' Ω > Zs,max = ' + zsmax.toFixed(3) + ' Ω\nPřekročení: ' + over + ' % — nutno snížit impedanci smyčky';
+  }
+}
+
+function renderTable() {
+  const tbody = document.getElementById('tbl-body');
+  const mult = MULT[type];
+  tbody.innerHTML = '';
+  IN_VALS.forEach((iv, i) => {
+    const ia = iv * mult;
+    const tr = document.createElement('tr');
+    if (i === inIdx) tr.className = 'row-active';
+    tr.innerHTML =
+      '<td>' + iv + '</td>' +
+      '<td>' + ia + '</td>' +
+      '<td>' + (230 / ia).toFixed(3) + '</td>' +
+      '<td>' + (400 / ia).toFixed(3) + '</td>' +
+      '<td>' + mult + '× In</td>';
+    tbody.appendChild(tr);
+  });
+}
+
+document.getElementById('out-in').textContent = IN_VALS[inIdx] + ' A';
+calc();
+renderTable();
+</script>
+</body>
+</html>
